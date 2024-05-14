@@ -10,20 +10,19 @@ editor: visual
 ```{mermaid}
 
 sequenceDiagram
-  participant Organisatie
-  participant Praktijkbureau
-  participant Clustercoordinator
-  participant Student
-  participant Bedrijvenportaal
-  participant Stageportaal
-  participant Talentregie
+  actor Organisatie
+  actor Praktijkbureau
+  actor Clustercoordinator
+  actor Student
+  actor Talentregie
+  actor Docentbegeleider/examinator
 
   %% Fase 1: Toegang & Indienen
   Organisatie->>Praktijkbureau: Aanvraag toegang
   Praktijkbureau->>Organisatie: Wachtwoord per e-mail
   Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
   Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
-
+  
   %% Fase 2: Beoordelen & Verwerken
   Praktijkbureau->>Clustercoordinator: Beoordeel praktijkplaats
   alt Goedgekeurd
@@ -56,7 +55,7 @@ sequenceDiagram
   Clustercoordinator->>Praktijkbureau: Koppeling voltooid
   Praktijkbureau->>Organisatie: Bevestigingsmail
   Praktijkbureau->>Student: Bevestigingsmail
-  Praktijkbureau->>Docentbegeleiders: Bevestigingsmail
+  Praktijkbureau->>Docentbegeleider/examinator: Bevestigingsmail
 
   %% Fase 5: Overzicht en Onderhoud
   loop Regelmatige updates
@@ -66,5 +65,3 @@ sequenceDiagram
 
 ```
 :::
-
-#### 

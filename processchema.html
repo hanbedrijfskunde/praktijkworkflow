@@ -73,20 +73,19 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">sequenceDiagram
-  participant Organisatie
-  participant Praktijkbureau
-  participant Clustercoordinator
-  participant Student
-  participant Bedrijvenportaal
-  participant Stageportaal
-  participant Talentregie
+  actor Organisatie
+  actor Praktijkbureau
+  actor Clustercoordinator
+  actor Student
+  actor Talentregie
+  actor Docentbegeleider/examinator
 
   %% Fase 1: Toegang &amp; Indienen
   Organisatie-&gt;&gt;Praktijkbureau: Aanvraag toegang
   Praktijkbureau-&gt;&gt;Organisatie: Wachtwoord per e-mail
   Organisatie-&gt;&gt;Bedrijvenportaal: Logt in en dient praktijkplaats in
   Bedrijvenportaal-&gt;&gt;Praktijkbureau: Nieuwe praktijkplaats details
-
+  
   %% Fase 2: Beoordelen &amp; Verwerken
   Praktijkbureau-&gt;&gt;Clustercoordinator: Beoordeel praktijkplaats
   alt Goedgekeurd
@@ -119,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
   Clustercoordinator-&gt;&gt;Praktijkbureau: Koppeling voltooid
   Praktijkbureau-&gt;&gt;Organisatie: Bevestigingsmail
   Praktijkbureau-&gt;&gt;Student: Bevestigingsmail
-  Praktijkbureau-&gt;&gt;Docentbegeleiders: Bevestigingsmail
+  Praktijkbureau-&gt;&gt;Docentbegeleider/examinator: Bevestigingsmail
 
   %% Fase 5: Overzicht en Onderhoud
   loop Regelmatige updates
@@ -134,9 +133,6 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<section id="section" class="level4">
-<h4 class="anchored" data-anchor-id="section"></h4>
-</section>
 
 </main>
 <!-- /main column -->

@@ -70,6 +70,7 @@ sequenceDiagram
 ```
 :::
 
+
 #### Fase 1: Toegang & Indienen
 
 1.  **Aanvraag toegang tot bedrijvenportaal**:
