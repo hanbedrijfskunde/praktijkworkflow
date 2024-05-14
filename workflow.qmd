@@ -26,7 +26,7 @@ sequenceDiagram
   Praktijkbureau->>Organisatie: Wachtwoord per e-mail
   Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
   Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
-
+  
   %% Fase 2: Beoordelen & Verwerken
   Praktijkbureau->>Clustercoordinator: Beoordeel praktijkplaats
   alt Goedgekeurd
@@ -69,6 +69,24 @@ sequenceDiagram
 
 ```
 :::
+
+```{mermaid}
+    sequenceDiagram
+      box Purple Alice & John
+        participant A
+        participant J
+      end
+      box Another Group
+        participant B
+        participant C
+      end
+      A->>J: Hello John, how are you?
+      J->>A: Great!
+      A->>B: Hello Bob, how is Charley?
+      B->>C: Hello Charley, how are you?
+
+```
+
 
 #### Fase 1: Toegang & Indienen
 

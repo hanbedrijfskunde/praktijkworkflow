@@ -84,11 +84,12 @@ ul.task-list li input[type="checkbox"] {
   actor Docentbegeleider/examinator
 
   %% Fase 1: Toegang &amp; Indienen
+ 
   Organisatie-&gt;&gt;Praktijkbureau: Aanvraag toegang
   Praktijkbureau-&gt;&gt;Organisatie: Wachtwoord per e-mail
   Organisatie-&gt;&gt;Bedrijvenportaal: Logt in en dient praktijkplaats in
   Bedrijvenportaal-&gt;&gt;Praktijkbureau: Nieuwe praktijkplaats details
-
+  
   %% Fase 2: Beoordelen &amp; Verwerken
   Praktijkbureau-&gt;&gt;Clustercoordinator: Beoordeel praktijkplaats
   alt Goedgekeurd
@@ -133,6 +134,31 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p></p></figure><p></p>
 </div>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">    sequenceDiagram
+      box Purple Alice &amp; John
+        participant A
+        participant J
+      end
+      box Another Group
+        participant B
+        participant C
+      end
+      A-&gt;&gt;J: Hello John, how are you?
+      J-&gt;&gt;A: Great!
+      A-&gt;&gt;B: Hello Bob, how is Charley?
+      B-&gt;&gt;C: Hello Charley, how are you?
+
+</pre>
+</div>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
