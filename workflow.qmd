@@ -14,13 +14,12 @@ Het proces begint met het aanvragen van toegang door de organisatie, gevolgd doo
 ```{mermaid}
 
 sequenceDiagram
-  participant Organisatie
-  participant Praktijkbureau
-  participant Clustercoordinator
-  participant Student
-  participant Bedrijvenportaal
-  participant Stageportaal
-  participant Talentregie
+  actor Organisatie
+  actor Praktijkbureau
+  actor Clustercoordinator
+  actor Student
+  actor Talentregie
+  actor Docentbegeleider/examinator
 
   %% Fase 1: Toegang & Indienen
   Organisatie->>Praktijkbureau: Aanvraag toegang
@@ -60,7 +59,7 @@ sequenceDiagram
   Clustercoordinator->>Praktijkbureau: Koppeling voltooid
   Praktijkbureau->>Organisatie: Bevestigingsmail
   Praktijkbureau->>Student: Bevestigingsmail
-  Praktijkbureau->>Docentbegeleiders: Bevestigingsmail
+  Praktijkbureau->>Docentbegeleider/examinator: Bevestigingsmail
 
   %% Fase 5: Overzicht en Onderhoud
   loop Regelmatige updates
