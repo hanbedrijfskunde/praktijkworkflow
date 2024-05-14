@@ -82,7 +82,7 @@ sequenceDiagram
 
 #### Fase 2: Beoordelen & Verwerken
 
-3.  **Beoordeling door praktijkcoördinator**:
+3.  **Beoordeling door clustercoördinator**:
     -   **Stap 2.1**: Praktijkbureau ontvangt de details van de nieuwe praktijkplaats en stuurt deze door naar de clustercoördinator.
     -   **Stap 2.2**: Clustercoördinator beoordeelt de ingediende praktijkplaats.
         -   **Goedgekeurd**: Status wordt bijgewerkt naar "PB BK: goedgekeurd STAGE/AOD".
