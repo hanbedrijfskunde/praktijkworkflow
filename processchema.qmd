@@ -1,0 +1,70 @@
+---
+title: "Processchema Stages / AODs"
+format: 
+  html:
+    css: styles.css
+editor: visual
+---
+
+::: column-screen
+```{mermaid}
+
+sequenceDiagram
+  participant Organisatie
+  participant Praktijkbureau
+  participant Clustercoordinator
+  participant Student
+  participant Bedrijvenportaal
+  participant Stageportaal
+  participant Talentregie
+
+  %% Fase 1: Toegang & Indienen
+  Organisatie->>Praktijkbureau: Aanvraag toegang
+  Praktijkbureau->>Organisatie: Wachtwoord per e-mail
+  Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
+  Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
+
+  %% Fase 2: Beoordelen & Verwerken
+  Praktijkbureau->>Clustercoordinator: Beoordeel praktijkplaats
+  alt Goedgekeurd
+    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
+  else Afgekeurd
+    Clustercoordinator->>Praktijkbureau: Praktijkplaats niet goedgekeurd
+    Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
+  end
+  Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
+
+  %% Fase 3: Inschrijvingen & Goedkeuring
+  Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
+  Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
+  Student->>Organisatie: Contact opnemen voor stage
+  Organisatie->>Student: Overeenkomst
+  Student->>Stageportaal: Praktijkplaats indienen
+  Stageportaal->>Praktijkbureau: Nieuwe inschrijving
+  Praktijkbureau->>Clustercoordinator: Beoordeel nieuwe inschrijving
+  alt Goedgekeurd
+    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
+  else Afgekeurd
+    Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
+    Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
+  end
+
+  %% Fase 4: Inzet begeleiding
+  Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
+  Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
+  Clustercoordinator->>CRM: Koppel student aan docentbegeleider / examinator
+  Clustercoordinator->>Praktijkbureau: Koppeling voltooid
+  Praktijkbureau->>Organisatie: Bevestigingsmail
+  Praktijkbureau->>Student: Bevestigingsmail
+  Praktijkbureau->>Docentbegeleiders: Bevestigingsmail
+
+  %% Fase 5: Overzicht en Onderhoud
+  loop Regelmatige updates
+    Praktijkbureau->>CRM: Bijhouden gegevens docentbegeleiders / examinatoren
+    Praktijkbureau->>CRM: Bijhouden van basisbestanden en status van praktijkplaatsen
+  end
+
+```
+:::
+
+#### 
