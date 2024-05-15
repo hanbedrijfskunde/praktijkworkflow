@@ -20,7 +20,8 @@ from collections import defaultdict
 from IPython.display import display, HTML
 
 def summarize_mermaid_diagram_to_html(diagram_code):
-    actions = defaultdict(list)
+    actions = defaultdict(lambda: {'perform': [], 'receive': []})
+    actors = set()
     current_phase = None
 
     for line in diagram_code.strip().split('\n'):
@@ -30,20 +31,49 @@ def summarize_mermaid_diagram_to_html(diagram_code):
             current_phase = line.split("%%")[1].strip()
             continue
 
+        if line.startswith("actor"):
+            actor = line.split()[1]
+            actors.add(actor)
+            continue
+
         match = re.match(r'(\w+)->>(\w+): (.+)', line)
         if match:
             actor, target, action = match.groups()
-            actions[actor].append(f"<li><strong>{current_phase}</strong>: {action}</li>")
-            actions[target].append(f"<li><strong>{current_phase}</strong>: Receives action '{action}' from {actor}</li>")
-
-    summary = {actor: sorted(activities) for actor, activities in actions.items()}
+            actions[actor]['perform'].append(f"<li><strong>{current_phase}</strong>: {action}</li>")
+            actions[target]['receive'].append(f"<li><strong>{current_phase}</strong>: Receives action '{action}' from {actor}</li>")
 
     # Generate HTML
-    html_output = ["<html><body><ul>"]
-    for actor, activities in summary.items():
+    html_output = ["<html><body>"]
+
+    # Describe actors first
+    html_output.append("<h4>Actoren</h4><ul>")
+    for actor in sorted(actors):
         html_output.append(f"<li><strong>{actor}:</strong><ul>")
-        html_output.extend(activities)
+        if actions[actor]['perform']:
+            html_output.append("<li><strong>Actions performed:</strong><ul>")
+            html_output.extend(actions[actor]['perform'])
+            html_output.append("</ul></li>")
+        if actions[actor]['receive']:
+            html_output.append("<li><strong>Actions received:</strong><ul>")
+            html_output.extend(actions[actor]['receive'])
+            html_output.append("</ul></li>")
         html_output.append("</ul></li>")
+    html_output.append("</ul>")
+
+    # Describe non-actors next
+    html_output.append("<h4>Systemen</h4><ul>")
+    for participant, activity in sorted(actions.items()):
+        if participant not in actors:
+            html_output.append(f"<li><strong>{participant}:</strong><ul>")
+            if activity['perform']:
+                html_output.append("<li><strong>Actions performed:</strong><ul>")
+                html_output.extend(activity['perform'])
+                html_output.append("</ul></li>")
+            if activity['receive']:
+                html_output.append("<li><strong>Actions received:</strong><ul>")
+                html_output.extend(activity['receive'])
+                html_output.append("</ul></li>")
+            html_output.append("</ul></li>")
     html_output.append("</ul></body></html>")
 
     return "\n".join(html_output)
