@@ -247,7 +247,7 @@ sequenceDiagram
 4.  **Converteren van goedgekeurde praktijkplaatsen**:
     -   **Stap 2.3**: Praktijkbureau maakt de goedgekeurde praktijkplaats zichtbaar voor studenten op het stageportaal.
 
-#### Fase 3: Communicatie & Feedback
+#### Fase 3: Inschrijvingen & Goedkeuring
 
 5.  **Studenten toegang verlenen tot stageportaal**:
     -   **Stap 3.1**: Praktijkbureau stuurt een uitnodigingscode voor het stageportaal naar studenten.
