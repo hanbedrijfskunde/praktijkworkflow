@@ -44,7 +44,7 @@ def summarize_mermaid_diagram_to_html(diagram_code):
         if match:
             actor, target, action = match.groups()
             actions[actor]['perform'].append(f"<li><strong>{current_phase}</strong>: {action}</li>")
-            actions[target]['receive'].append(f"<li><strong>{current_phase}</strong>: {action} from {actor}</li>")
+            actions[target]['receive'].append(f"<li><strong>{current_phase}</strong>: {action} van {actor}</li>")
 
     # Generate HTML
     html_output = ["<html><body>"]
