@@ -93,12 +93,15 @@ sequenceDiagram
   actor Docentbegeleider/examinator
 
   %% Fase 1: Toegang & Indienen
+  rect rgb(137, 207, 240, 0.3)
   Organisatie->>Praktijkbureau: Aanvraag toegang
   Praktijkbureau->>Organisatie: Wachtwoord per e-mail
   Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
   Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
+  end
   
   %% Fase 2: Beoordelen & Verwerken
+  rect rgb(240, 128, 128, 0.3)
   Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
@@ -107,8 +110,10 @@ sequenceDiagram
     Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
   end
   Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
+  end
 
   %% Fase 3: Inschrijvingen & Goedkeuring
+  rect rgb(152, 251, 152, 0.3)
   Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
   Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
   Student->>Organisatie: Contact opnemen voor stage
@@ -122,8 +127,10 @@ sequenceDiagram
     Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
     Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
   end
+  end
 
   %% Fase 4: Inzet begeleiding
+  rect rgb(230, 230, 250, 0.3)
   Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
   Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
   Clustercoordinator->>CRM: Koppel student aan docentbegeleider / examinator
@@ -131,11 +138,14 @@ sequenceDiagram
   Praktijkbureau->>Organisatie: Bevestigingsmail
   Praktijkbureau->>Student: Bevestigingsmail
   Praktijkbureau->>Docentbegeleider/examinator: Bevestigingsmail
+  end
 
   %% Fase 5: Overzicht en Onderhoud
+  rect rgb(255, 250, 205, 0.3)
   loop Regelmatige updates
     Praktijkbureau->>CRM: Bijhouden gegevens docentbegeleiders / examinatoren
     Praktijkbureau->>CRM: Bijhouden van basisbestanden en status van praktijkplaatsen
+  end
   end
 """
 
@@ -158,12 +168,15 @@ sequenceDiagram
   actor Docentbegeleider/examinator
 
   %% Fase 1: Toegang & Indienen
+  rect rgb(137, 207, 240, 0.3)
   Organisatie->>Praktijkbureau: Aanvraag toegang
   Praktijkbureau->>Organisatie: Wachtwoord per e-mail
   Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
   Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
+  end
   
   %% Fase 2: Beoordelen & Verwerken
+  rect rgb(240, 128, 128, 0.3)
   Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
@@ -172,8 +185,10 @@ sequenceDiagram
     Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
   end
   Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
+  end
 
   %% Fase 3: Inschrijvingen & Goedkeuring
+  rect rgb(152, 251, 152, 0.3)
   Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
   Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
   Student->>Organisatie: Contact opnemen voor stage
@@ -187,8 +202,10 @@ sequenceDiagram
     Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
     Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
   end
+  end
 
   %% Fase 4: Inzet begeleiding
+  rect rgb(230, 230, 250, 0.3)
   Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
   Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
   Clustercoordinator->>CRM: Koppel student aan docentbegeleider / examinator
@@ -196,11 +213,14 @@ sequenceDiagram
   Praktijkbureau->>Organisatie: Bevestigingsmail
   Praktijkbureau->>Student: Bevestigingsmail
   Praktijkbureau->>Docentbegeleider/examinator: Bevestigingsmail
+  end
 
   %% Fase 5: Overzicht en Onderhoud
+  rect rgb(255, 250, 205, 0.3)
   loop Regelmatige updates
     Praktijkbureau->>CRM: Bijhouden gegevens docentbegeleiders / examinatoren
     Praktijkbureau->>CRM: Bijhouden van basisbestanden en status van praktijkplaatsen
+  end
   end
 
 ```
@@ -223,7 +243,7 @@ sequenceDiagram
     -   **Stap 2.1**: Praktijkbureau ontvangt de details van de nieuwe praktijkplaats en stuurt deze door naar de clustercoördinator.
     -   **Stap 2.2**: Clustercoördinator beoordeelt de ingediende praktijkplaats.
         -   **Goedgekeurd**: Status wordt bijgewerkt naar "PB BK: goedgekeurd STAGE/AOD".
-        -   **Afgekeurd**: Praktijkplaats wordt niet goedgekeurd en de organisatie ontvangt informatie over waarom de praktijkplaats niet voldoet en eventuele aanpassingen die nodig zijn.
+        -   **Afgekeurd**: Status wordt bijgewerkt naar "PB BK: afgekeurd STAGE/AOD" en de organisatie ontvangt informatie over waarom de praktijkplaats niet voldoet en eventuele aanpassingen die nodig zijn.
 4.  **Converteren van goedgekeurde praktijkplaatsen**:
     -   **Stap 2.3**: Praktijkbureau maakt de goedgekeurde praktijkplaats zichtbaar voor studenten op het stageportaal.
 

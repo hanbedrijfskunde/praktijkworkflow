@@ -6,8 +6,9 @@ format:
 editor: visual
 ---
 
-::: column-screen
+
 ```{mermaid}
+%%| column: screen
 sequenceDiagram
   actor Organisatie
   actor Praktijkbureau
@@ -17,12 +18,15 @@ sequenceDiagram
   actor Docentbegeleider/examinator
 
   %% Fase 1: Toegang & Indienen
+  rect rgb(137, 207, 240, 0.3)
   Organisatie->>Praktijkbureau: Aanvraag toegang
   Praktijkbureau->>Organisatie: Wachtwoord per e-mail
   Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
   Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
+  end
   
   %% Fase 2: Beoordelen & Verwerken
+  rect rgb(240, 128, 128, 0.3)
   Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
@@ -31,8 +35,10 @@ sequenceDiagram
     Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
   end
   Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
+  end
 
   %% Fase 3: Inschrijvingen & Goedkeuring
+  rect rgb(152, 251, 152, 0.3)
   Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
   Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
   Student->>Organisatie: Contact opnemen voor stage
@@ -46,8 +52,10 @@ sequenceDiagram
     Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
     Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
   end
+  end
 
   %% Fase 4: Inzet begeleiding
+  rect rgb(230, 230, 250, 0.3)
   Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
   Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
   Clustercoordinator->>CRM: Koppel student aan docentbegeleider / examinator
@@ -55,12 +63,15 @@ sequenceDiagram
   Praktijkbureau->>Organisatie: Bevestigingsmail
   Praktijkbureau->>Student: Bevestigingsmail
   Praktijkbureau->>Docentbegeleider/examinator: Bevestigingsmail
+  end
 
   %% Fase 5: Overzicht en Onderhoud
+  rect rgb(255, 250, 205, 0.3)
   loop Regelmatige updates
     Praktijkbureau->>CRM: Bijhouden gegevens docentbegeleiders / examinatoren
     Praktijkbureau->>CRM: Bijhouden van basisbestanden en status van praktijkplaatsen
   end
+  end
 
 ```
-:::
+
