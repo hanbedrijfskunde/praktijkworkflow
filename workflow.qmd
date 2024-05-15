@@ -1,5 +1,5 @@
 ---
-title: "Processchema Stages / AODs"
+title: "Procesbeschrijving Stages / AODs"
 format: 
   html:
     css: styles.css
