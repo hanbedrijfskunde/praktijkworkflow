@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="workflow_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="workflow_files/libs/clipboard/clipboard.min.js"></script>
 <script src="workflow_files/libs/quarto-html/quarto.js"></script>
 <script src="workflow_files/libs/quarto-html/popper.min.js"></script>
 <script src="workflow_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -36,6 +36,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="workflow_files/libs/quarto-diagram/mermaid.min.js"></script>
 <script src="workflow_files/libs/quarto-diagram/mermaid-init.js"></script>
 <link href="workflow_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -66,9 +69,88 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="samenvatting" class="level3 page-columns page-full">
+<section id="samenvatting" class="level3">
 <h3 class="anchored" data-anchor-id="samenvatting">Samenvatting</h3>
-<p>Het proces begint met het aanvragen van toegang door de organisatie, gevolgd door het indienen van praktijkplaatsen. Deze worden beoordeeld door de praktijkcoördinator en, indien goedgekeurd, zichtbaar gemaakt voor studenten. Studenten krijgen toegang tot het stageportaal, nemen contact op met organisaties en dienen hun inschrijvingen in. Deze inschrijvingen worden opnieuw beoordeeld en bij goedkeuring worden studenten gekoppeld aan begeleiders. Gedurende het hele proces worden regelmatig updates uitgevoerd en gegevens bijgehouden.</p>
+<p>Het proces begint met het aanvragen van toegang door de organisatie, gevolgd door het indienen van praktijkplaatsen. Deze worden beoordeeld door de clustercoördinator en, indien goedgekeurd, zichtbaar gemaakt voor studenten. Studenten krijgen toegang tot het stageportaal, nemen contact op met organisaties en dienen hun inschrijvingen in. Deze inschrijvingen worden opnieuw beoordeeld en bij goedkeuring worden studenten gekoppeld aan begeleiders. Gedurende het hele proces worden regelmatig updates uitgevoerd en gegevens bijgehouden.</p>
+</section>
+<section id="actoren-en-systemen" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="actoren-en-systemen">Actoren en systemen</h3>
+<div id="aff97319" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<ul>
+<li><strong>Organisatie:</strong><ul>
+<li><strong>Fase 1: Toegang &amp; Indienen</strong>: Aanvraag toegang</li>
+<li><strong>Fase 1: Toegang &amp; Indienen</strong>: Logt in en dient praktijkplaats in</li>
+<li><strong>Fase 1: Toegang &amp; Indienen</strong>: Receives action 'Wachtwoord per e-mail' from Praktijkbureau</li>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: Receives action 'Informatie over afkeuring en aanpassingen' from Praktijkbureau</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Overeenkomst</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'Contact opnemen voor stage' from Student</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Receives action 'Bevestigingsmail' from Praktijkbureau</li>
+</ul></li>
+<li><strong>Praktijkbureau:</strong><ul>
+<li><strong>Fase 1: Toegang &amp; Indienen</strong>: Receives action 'Aanvraag toegang' from Organisatie</li>
+<li><strong>Fase 1: Toegang &amp; Indienen</strong>: Receives action 'Nieuwe praktijkplaats details' from Bedrijvenportaal</li>
+<li><strong>Fase 1: Toegang &amp; Indienen</strong>: Wachtwoord per e-mail</li>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: Beoordeel praktijkplaats</li>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: Informatie over afkeuring en aanpassingen</li>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: Praktijkplaats zichtbaar maken voor studenten</li>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: Receives action 'PB BK: goedgekeurd STAGE/AOD' from Clustercoordinator</li>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: Receives action 'Praktijkplaats niet goedgekeurd' from Clustercoordinator</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Beoordeel nieuwe inschrijving</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Informatie over afkeuring en aanpassingen</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'Nieuwe inschrijving' from Stageportaal</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'PB BK: afgekeurd STAGE/AOD' from Clustercoordinator</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'PB BK: goedgekeurd STAGE/AOD' from Clustercoordinator</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Uitnodigingscode voor stageportaal</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Bevestigingsmail</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Bevestigingsmail</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Receives action 'Koppeling voltooid' from Clustercoordinator</li>
+<li><strong>Fase 5: Overzicht en Onderhoud</strong>: Bijhouden gegevens docentbegeleiders / examinatoren</li>
+<li><strong>Fase 5: Overzicht en Onderhoud</strong>: Bijhouden van basisbestanden en status van praktijkplaatsen</li>
+</ul></li>
+<li><strong>Bedrijvenportaal:</strong><ul>
+<li><strong>Fase 1: Toegang &amp; Indienen</strong>: Nieuwe praktijkplaats details</li>
+<li><strong>Fase 1: Toegang &amp; Indienen</strong>: Receives action 'Logt in en dient praktijkplaats in' from Organisatie</li>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: Receives action 'Praktijkplaats zichtbaar maken voor studenten' from Praktijkbureau</li>
+</ul></li>
+<li><strong>Clustercoordinator:</strong><ul>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: PB BK: goedgekeurd STAGE/AOD</li>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: Praktijkplaats niet goedgekeurd</li>
+<li><strong>Fase 2: Beoordelen &amp; Verwerken</strong>: Receives action 'Beoordeel praktijkplaats' from Praktijkbureau</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: PB BK: afgekeurd STAGE/AOD</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: PB BK: goedgekeurd STAGE/AOD</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'Beoordeel nieuwe inschrijving' from Praktijkbureau</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Koppel student aan docentbegeleider / examinator</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Koppeling voltooid</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Receives action 'Beschikbare docentbegeleiders / examinatoren' from Talentregie</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren</li>
+</ul></li>
+<li><strong>Student:</strong><ul>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Contact opnemen voor stage</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Logt in en bekijkt praktijkplaatsen</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Praktijkplaats indienen</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'Informatie over afkeuring en aanpassingen' from Praktijkbureau</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'Overeenkomst' from Organisatie</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'Uitnodigingscode voor stageportaal' from Praktijkbureau</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Receives action 'Bevestigingsmail' from Praktijkbureau</li>
+</ul></li>
+<li><strong>Stageportaal:</strong><ul>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Nieuwe inschrijving</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'Logt in en bekijkt praktijkplaatsen' from Student</li>
+<li><strong>Fase 3: Inschrijvingen &amp; Goedkeuring</strong>: Receives action 'Praktijkplaats indienen' from Student</li>
+</ul></li>
+<li><strong>Talentregie:</strong><ul>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Beschikbare docentbegeleiders / examinatoren</li>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Receives action 'Verzoek om overzicht beschikbare docentbegeleiders / examinatoren' from Clustercoordinator</li>
+</ul></li>
+<li><strong>CRM:</strong><ul>
+<li><strong>Fase 4: Inzet begeleiding</strong>: Receives action 'Koppel student aan docentbegeleider / examinator' from Clustercoordinator</li>
+<li><strong>Fase 5: Overzicht en Onderhoud</strong>: Receives action 'Bijhouden gegevens docentbegeleiders / examinatoren' from Praktijkbureau</li>
+<li><strong>Fase 5: Overzicht en Onderhoud</strong>: Receives action 'Bijhouden van basisbestanden en status van praktijkplaatsen' from Praktijkbureau</li>
+</ul></li>
+</ul>
+</div>
+</div>
 <div class="column-screen">
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">

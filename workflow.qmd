@@ -8,7 +8,107 @@ editor: visual
 
 ### Samenvatting
 
-Het proces begint met het aanvragen van toegang door de organisatie, gevolgd door het indienen van praktijkplaatsen. Deze worden beoordeeld door de praktijkcoördinator en, indien goedgekeurd, zichtbaar gemaakt voor studenten. Studenten krijgen toegang tot het stageportaal, nemen contact op met organisaties en dienen hun inschrijvingen in. Deze inschrijvingen worden opnieuw beoordeeld en bij goedkeuring worden studenten gekoppeld aan begeleiders. Gedurende het hele proces worden regelmatig updates uitgevoerd en gegevens bijgehouden.
+Het proces begint met het aanvragen van toegang door de organisatie, gevolgd door het indienen van praktijkplaatsen. Deze worden beoordeeld door de clustercoördinator en, indien goedgekeurd, zichtbaar gemaakt voor studenten. Studenten krijgen toegang tot het stageportaal, nemen contact op met organisaties en dienen hun inschrijvingen in. Deze inschrijvingen worden opnieuw beoordeeld en bij goedkeuring worden studenten gekoppeld aan begeleiders. Gedurende het hele proces worden regelmatig updates uitgevoerd en gegevens bijgehouden.
+
+### Actoren en systemen
+
+```{python}
+#| echo: false
+
+import re
+from collections import defaultdict
+from IPython.display import display, HTML
+
+def summarize_mermaid_diagram_to_html(diagram_code):
+    actions = defaultdict(list)
+    current_phase = None
+
+    for line in diagram_code.strip().split('\n'):
+        line = line.strip()
+
+        if line.startswith("%%"):
+            current_phase = line.split("%%")[1].strip()
+            continue
+
+        match = re.match(r'(\w+)->>(\w+): (.+)', line)
+        if match:
+            actor, target, action = match.groups()
+            actions[actor].append(f"<li><strong>{current_phase}</strong>: {action}</li>")
+            actions[target].append(f"<li><strong>{current_phase}</strong>: Receives action '{action}' from {actor}</li>")
+
+    summary = {actor: sorted(activities) for actor, activities in actions.items()}
+
+    # Generate HTML
+    html_output = ["<html><body><ul>"]
+    for actor, activities in summary.items():
+        html_output.append(f"<li><strong>{actor}:</strong><ul>")
+        html_output.extend(activities)
+        html_output.append("</ul></li>")
+    html_output.append("</ul></body></html>")
+
+    return "\n".join(html_output)
+
+# Example usage:
+diagram_code = """
+sequenceDiagram
+  actor Organisatie
+  actor Praktijkbureau
+  actor Clustercoordinator
+  actor Student
+  actor Talentregie
+  actor Docentbegeleider/examinator
+
+  %% Fase 1: Toegang & Indienen
+  Organisatie->>Praktijkbureau: Aanvraag toegang
+  Praktijkbureau->>Organisatie: Wachtwoord per e-mail
+  Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
+  Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
+  
+  %% Fase 2: Beoordelen & Verwerken
+  Praktijkbureau->>Clustercoordinator: Beoordeel praktijkplaats
+  alt Goedgekeurd
+    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
+  else Afgekeurd
+    Clustercoordinator->>Praktijkbureau: Praktijkplaats niet goedgekeurd
+    Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
+  end
+  Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
+
+  %% Fase 3: Inschrijvingen & Goedkeuring
+  Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
+  Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
+  Student->>Organisatie: Contact opnemen voor stage
+  Organisatie->>Student: Overeenkomst
+  Student->>Stageportaal: Praktijkplaats indienen
+  Stageportaal->>Praktijkbureau: Nieuwe inschrijving
+  Praktijkbureau->>Clustercoordinator: Beoordeel nieuwe inschrijving
+  alt Goedgekeurd
+    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
+  else Afgekeurd
+    Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
+    Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
+  end
+
+  %% Fase 4: Inzet begeleiding
+  Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
+  Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
+  Clustercoordinator->>CRM: Koppel student aan docentbegeleider / examinator
+  Clustercoordinator->>Praktijkbureau: Koppeling voltooid
+  Praktijkbureau->>Organisatie: Bevestigingsmail
+  Praktijkbureau->>Student: Bevestigingsmail
+  Praktijkbureau->>Docentbegeleider/examinator: Bevestigingsmail
+
+  %% Fase 5: Overzicht en Onderhoud
+  loop Regelmatige updates
+    Praktijkbureau->>CRM: Bijhouden gegevens docentbegeleiders / examinatoren
+    Praktijkbureau->>CRM: Bijhouden van basisbestanden en status van praktijkplaatsen
+  end
+"""
+
+html_summary = summarize_mermaid_diagram_to_html(diagram_code)
+display(HTML(html_summary))
+
+```
 
 ::: column-screen
 ```{mermaid}
@@ -70,7 +170,6 @@ sequenceDiagram
 ```
 :::
 
-
 #### Fase 1: Toegang & Indienen
 
 1.  **Aanvraag toegang tot bedrijvenportaal**:
@@ -120,13 +219,13 @@ sequenceDiagram
 10. **Monitoring en updates**:
     -   **Stap 5.1**: Bijhouden gegevens docentbegeleiders / examinatoren \<\<\< OP BASIS VAN INFORMATIE TALENTREGIE??
     -   **Stap 5.2**: Bijhouden van basisbestanden en de status van praktijkplaatsen.\<\<\< OP BASIS VAN WELKE INFORMATIEBRONNEN??
-    
+
 #### Openstaande zaken
 
 -   **Vraag 1**: Hoe wordt de capaciteit van docentbegeleiders / examinatoren bepaald en gecommuniceerd?
 
--  **Vraag 2**: Hoe wordt de beschikbaarheid van docentbegeleiders / examinatoren gecommuniceerd en bijgehouden?
+-   **Vraag 2**: Hoe wordt de beschikbaarheid van docentbegeleiders / examinatoren gecommuniceerd en bijgehouden?
 
--  **Vraag 3**: Hoe wordt de actuele status van praktijkplaatsen gecommuniceerd en bijgehouden?
+-   **Vraag 3**: Hoe wordt de actuele status van praktijkplaatsen gecommuniceerd en bijgehouden?
 
--  **Vraag 4**: Hoe wordt de stagedrempel van studenten gecontroleerd?
+-   **Vraag 4**: Hoe wordt de stagedrempel van studenten gecontroleerd?
