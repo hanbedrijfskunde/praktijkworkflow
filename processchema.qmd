@@ -26,7 +26,7 @@ sequenceDiagram
   end
   
   %% Fase 2: Beoordelen & Verwerken
-  rect rgb(240, 128, 128, 0.3)
+  rect rgb(240, 128, 128, 0.1)
   Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
