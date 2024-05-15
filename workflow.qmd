@@ -103,7 +103,7 @@ sequenceDiagram
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
-    Clustercoordinator->>Praktijkbureau: Praktijkplaats niet goedgekeurd
+    Clustercoordinator->>Praktijkbureau: Praktijkplaats afgekeurd
     Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
   end
   Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
