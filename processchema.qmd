@@ -8,7 +8,6 @@ editor: visual
 
 ::: column-screen
 ```{mermaid}
-
 sequenceDiagram
   actor Organisatie
   actor Praktijkbureau
@@ -24,11 +23,11 @@ sequenceDiagram
   Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
   
   %% Fase 2: Beoordelen & Verwerken
-  Praktijkbureau->>Clustercoordinator: Beoordeel praktijkplaats
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
-    Clustercoordinator->>Praktijkbureau: Praktijkplaats niet goedgekeurd
+    Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
     Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
   end
   Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
@@ -40,7 +39,7 @@ sequenceDiagram
   Organisatie->>Student: Overeenkomst
   Student->>Stageportaal: Praktijkplaats indienen
   Stageportaal->>Praktijkbureau: Nieuwe inschrijving
-  Praktijkbureau->>Clustercoordinator: Beoordeel nieuwe inschrijving
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel nieuwe inschrijving
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd

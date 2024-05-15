@@ -87,11 +87,11 @@ ul.task-list li input[type="checkbox"] {
   Bedrijvenportaal-&gt;&gt;Praktijkbureau: Nieuwe praktijkplaats details
   
   %% Fase 2: Beoordelen &amp; Verwerken
-  Praktijkbureau-&gt;&gt;Clustercoordinator: Beoordeel praktijkplaats
+  Praktijkbureau-&gt;&gt;Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
     Clustercoordinator-&gt;&gt;Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
-    Clustercoordinator-&gt;&gt;Praktijkbureau: Praktijkplaats niet goedgekeurd
+    Clustercoordinator-&gt;&gt;Praktijkbureau: PB BK: afgekeurd STAGE/AOD
     Praktijkbureau-&gt;&gt;Organisatie: Informatie over afkeuring en aanpassingen
   end
   Praktijkbureau-&gt;&gt;Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
@@ -103,7 +103,7 @@ ul.task-list li input[type="checkbox"] {
   Organisatie-&gt;&gt;Student: Overeenkomst
   Student-&gt;&gt;Stageportaal: Praktijkplaats indienen
   Stageportaal-&gt;&gt;Praktijkbureau: Nieuwe inschrijving
-  Praktijkbureau-&gt;&gt;Clustercoordinator: Beoordeel nieuwe inschrijving
+  Praktijkbureau-&gt;&gt;Clustercoordinator: Opdracht beoordeel nieuwe inschrijving
   alt Goedgekeurd
     Clustercoordinator-&gt;&gt;Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
