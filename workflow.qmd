@@ -1,5 +1,6 @@
 ---
 title: "Procesbeschrijving Stages / AODs"
+subtitle: "Voorbereiding stagetraject"
 format: 
   html:
     css: styles.css
