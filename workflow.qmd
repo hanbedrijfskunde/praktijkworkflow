@@ -44,7 +44,7 @@ def summarize_mermaid_diagram_to_html(diagram_code):
         if match:
             actor, target, action = match.groups()
             actions[actor]['perform'].append(f"<li><strong>{current_phase}</strong>: {action}</li>")
-            actions[target]['receive'].append(f"<li><strong>{current_phase}</strong>: Receives action '{action}' from {actor}</li>")
+            actions[target]['receive'].append(f"<li><strong>{current_phase}</strong>: {action} from {actor}</li>")
 
     # Generate HTML
     html_output = ["<html><body>"]
@@ -54,11 +54,11 @@ def summarize_mermaid_diagram_to_html(diagram_code):
     for actor in sorted(actors):
         html_output.append(f"<li><strong>{actor}:</strong><ul>")
         if actions[actor]['perform']:
-            html_output.append("<li><strong>Actions performed:</strong><ul>")
+            html_output.append("<li><strong>Acties uitvoering:</strong><ul>")
             html_output.extend(actions[actor]['perform'])
             html_output.append("</ul></li>")
         if actions[actor]['receive']:
-            html_output.append("<li><strong>Actions received:</strong><ul>")
+            html_output.append("<li><strong>Acties ontvangst:</strong><ul>")
             html_output.extend(actions[actor]['receive'])
             html_output.append("</ul></li>")
         html_output.append("</ul></li>")
@@ -70,11 +70,11 @@ def summarize_mermaid_diagram_to_html(diagram_code):
         if participant not in actors:
             html_output.append(f"<li><strong>{participant}:</strong><ul>")
             if activity['perform']:
-                html_output.append("<li><strong>Actions performed:</strong><ul>")
+                html_output.append("<li><strong>Acties uitvoering:</strong><ul>")
                 html_output.extend(activity['perform'])
                 html_output.append("</ul></li>")
             if activity['receive']:
-                html_output.append("<li><strong>Actions received:</strong><ul>")
+                html_output.append("<li><strong>Acties ontvangst:</strong><ul>")
                 html_output.extend(activity['receive'])
                 html_output.append("</ul></li>")
             html_output.append("</ul></li>")
@@ -99,7 +99,7 @@ sequenceDiagram
   Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
   
   %% Fase 2: Beoordelen & Verwerken
-  Praktijkbureau->>Clustercoordinator: Beoordeel praktijkplaats
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
@@ -115,7 +115,7 @@ sequenceDiagram
   Organisatie->>Student: Overeenkomst
   Student->>Stageportaal: Praktijkplaats indienen
   Stageportaal->>Praktijkbureau: Nieuwe inschrijving
-  Praktijkbureau->>Clustercoordinator: Beoordeel nieuwe inschrijving
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel nieuwe inschrijving
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
@@ -164,7 +164,7 @@ sequenceDiagram
   Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
   
   %% Fase 2: Beoordelen & Verwerken
-  Praktijkbureau->>Clustercoordinator: Beoordeel praktijkplaats
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
@@ -180,7 +180,7 @@ sequenceDiagram
   Organisatie->>Student: Overeenkomst
   Student->>Stageportaal: Praktijkplaats indienen
   Stageportaal->>Praktijkbureau: Nieuwe inschrijving
-  Praktijkbureau->>Clustercoordinator: Beoordeel nieuwe inschrijving
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel nieuwe inschrijving
   alt Goedgekeurd
     Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
