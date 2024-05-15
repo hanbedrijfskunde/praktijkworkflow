@@ -3,7 +3,9 @@ title: "Processchema Stages / AODs"
 format: 
   html:
     css: styles.css
+    toc: true
 editor: visual
+lang: nl  
 ---
 
 ### Samenvatting
@@ -11,6 +13,8 @@ editor: visual
 Het proces begint met het aanvragen van toegang door de organisatie, gevolgd door het indienen van praktijkplaatsen. Deze worden beoordeeld door de clustercoördinator en, indien goedgekeurd, zichtbaar gemaakt voor studenten. Studenten krijgen toegang tot het stageportaal, nemen contact op met organisaties en dienen hun inschrijvingen in. Deze inschrijvingen worden opnieuw beoordeeld en bij goedkeuring worden studenten gekoppeld aan begeleiders. Gedurende het hele proces worden regelmatig updates uitgevoerd en gegevens bijgehouden.
 
 ### Actoren en systemen
+
+Bij het proces zijn volgende actoren en systemen betrokken:
 
 ```{python}
 #| echo: false
@@ -140,6 +144,8 @@ display(HTML(html_summary))
 
 ```
 
+### Processchema
+
 ::: column-screen
 ```{mermaid}
 
@@ -199,6 +205,8 @@ sequenceDiagram
 
 ```
 :::
+
+### Processtappen
 
 #### Fase 1: Toegang & Indienen
 
