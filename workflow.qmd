@@ -41,7 +41,7 @@ def summarize_mermaid_diagram_to_html(diagram_code):
             actors.add(actor)
             continue
 
-        match = re.match(r'(\w+)->>(\w+): (.+)', line)
+        match = re.match(r'([\w/]+)->>([\w/]+): (.+)', line)
         if match:
             actor, target, action = match.groups()
             actions[actor]['perform'].append(f"<li><strong>{current_phase}</strong>: {action}</li>")
