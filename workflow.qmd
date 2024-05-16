@@ -271,7 +271,7 @@ sequenceDiagram
     -   **Stap 4.2**: Clustercoördinator koppelt de student aan een docentbegeleider / examinator.\<\<\< HOE IS DE ACTUELE CAPACITEIT ZICHTBAAR??
 9.  **Verzending van bevestigingsmails**:
     -   **Stap 4.3**: Clustercoordinator bevestigt koppeling student met docentbegeleider / examinator aan Praktijkbureau.
-    -   **Stap 4.3**: Praktijkbureau stuurt bevestigingsmails naar de organisatie, student, en docentbegeleiders.
+    -   **Stap 4.4**: Praktijkbureau stuurt bevestigingsmails naar de organisatie, student, en docentbegeleiders.
 
 #### Fase 5: Overzicht en Onderhoud
 
