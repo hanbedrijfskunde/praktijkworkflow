@@ -252,12 +252,6 @@ sequenceDiagram
 
 ### Processtappen
 
-#### 
-
-Hier is de verbeterde en genummerde structuur van de processtappen:
-
-### Processtappen
-
 #### ORGANISATIE
 
 **Fase 1: Toegang & Indienen**
