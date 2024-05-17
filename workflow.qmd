@@ -15,7 +15,7 @@ Het proces begint met het aanvragen van toegang door de organisatie, gevolgd doo
 
 ### Actoren en systemen
 
-Bij het proces zijn volgende actoren en systemen betrokken:
+Hieronder volgt een overzicht van alle actoren en systemen die bij de processen zijn betrokken, alsmede per procesfase de acties die ze initieren of waarvan ze de uitkomst ontvangen.
 
 ```{python}
 #| echo: false
@@ -252,13 +252,11 @@ sequenceDiagram
 
 ### Processtappen
 
-#### ORGANISATIE
-
-**Fase 1: Toegang & Indienen**
+#### **FASE 1: INDIENEN STAGEPLEK**
 
 **Aanvraag toegang tot bedrijvenportaal:**
 
-1.1: Organisatie dient een aanvraag voor toegang tot het bedrijvenportaal in via [Praktijkopdrachten](https://praktijkopdrachten.han.nl/).
+1.1: Organisatie dient een aanvraag voor toegang tot het bedrijvenportaal in via [Praktijkopdrachten](https://praktijkopdrachten.han.nl/){target="_blank"}.
 
 1.2: Servicedesk verifieert de aanvraag en stuurt het wachtwoord per e-mail naar de organisatie.
 
@@ -268,7 +266,7 @@ sequenceDiagram
 
 1.4: Organisatie dient een nieuwe praktijkplaats in via het bedrijvenportaal, inclusief alle vereiste details.
 
-**Fase 2: Beoordelen & Verwerken**
+#### **FASE 2: BEOORDELEN PRAKTIJKPLAATS**
 
 **Beoordeling door clustercoördinator:**
 
@@ -281,7 +279,7 @@ sequenceDiagram
 
 2.2: Praktijkbureau maakt de goedgekeurde praktijkplaats zichtbaar voor studenten op het stageportaal.
 
-#### STUDENT
+#### FASE 3: INSCHRIJVING STUDENT
 
 **Fase 3: Inschrijvingen & Goedkeuring**
 
@@ -314,9 +312,7 @@ sequenceDiagram
 
 3.9: Praktijkbureau converteert de aanvraag en verhuist deze naar ‘BK 24/25 STAGE S1 OU student informeel geplaatst’ of ‘BK 24/25 AOD S1 OU student informeel geplaatst’.
 
-#### KOPPELEN
-
-**Fase 4: Inzet begeleiders / examinatoren**
+#### FASE 4: KOPPELEN STUDENT AAN BEGELEIDING
 
 4.1: Clustercoördinator stuurt verzoek om overzicht van beschikbare docentbegeleiders / examinatoren naar talentregie.
 
@@ -328,9 +324,7 @@ sequenceDiagram
 
 4.5: Praktijkbureau stuurt bevestigingsmails naar de organisatie, student, en docentbegeleiders.
 
-#### MONITOREN en ACTUALISEREN
-
-**Fase 5: Overzicht en Onderhoud**
+#### FASE 5: MONITOREN en ACTUALISEREN
 
 5.1: Bijhouden gegevens docentbegeleiders / examinatoren.
 
