@@ -88,64 +88,53 @@ diagram_code = """
 sequenceDiagram
   actor Organisatie
   actor Praktijkbureau
-  actor Servicedesk
   actor Clustercoordinator
   actor Student
   actor Talentregie
   actor Docentbegeleider/examinator
-  participant Bedrijvenportaal
-  participant Stageportaal
-  participant CRM
-  participant OSIRIS
-  participant Teams
-  
 
   %% Fase 1: Toegang & Indienen
   rect rgb(137, 207, 240, 0.3)
-  Organisatie->>Servicedesk: Aanvraag toegang
-  Servicedesk->>Organisatie: Wachtwoord per e-mail na verificatie
+  Organisatie->>Praktijkbureau: Aanvraag toegang
+  Praktijkbureau->>Organisatie: Wachtwoord per e-mail
   Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
+  Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
   end
   
   %% Fase 2: Beoordelen & Verwerken
-  rect rgb(240, 128, 128, 0.1)
-  CRM->>Clustercoordinator: Nieuwe praktijkplaats details
+  rect rgb(240, 128, 128, 0.3)
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
-    Clustercoordinator->>CRM: GESCHIKT VOOR STAGE/AOD
+    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
-    Clustercoordinator->>CRM: Aanvraag geannuleerd (via 3 puntjes in werkbalk)
+    Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
     Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
-  end
-  opt Geschikt voor ander opleiding
-    Praktijkbureau ->> CRM: Opleiding aangepast in veld Opleiding vanuit bedrijvenportaal
   end
   Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
   end
 
   %% Fase 3: Inschrijvingen & Goedkeuring
   rect rgb(152, 251, 152, 0.3)
-  Praktijkbureau->>Teams: Plaatst Excel-bestanden (BK STAGE en BK AOD basisbestanden)
-  Praktijkbureau->>OSIRIS: Koppelt student aan groep (ST-BK-STAGE of ST-BK-AOD)
   Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
   Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
   Student->>Organisatie: Contact opnemen voor stage
   Organisatie->>Student: Overeenkomst
   Student->>Stageportaal: Praktijkplaats indienen
-  CRM->>Clustercoordinator: Nieuwe inschrijving details
+  Stageportaal->>Praktijkbureau: Nieuwe inschrijving
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel nieuwe inschrijving
   alt Goedgekeurd
-    Clustercoordinator->>CRM: GOEDGEKEURD
+    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
-    Clustercoordinator->>CRM: AFGEKEURD
+    Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
     Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
   end
-  Praktijkbureau->>Teams: Conversie en verplaatsing naar ‘BK 24/25 STAGE S1 OU student informeel geplaatst’ of ‘BK 24/25 AOD S1 OU student informeel geplaatst’
   end
 
   %% Fase 4: Inzet begeleiding
   rect rgb(230, 230, 250, 0.3)
   Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
   Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
-  Clustercoordinator->>CRM: Koppeling student aan docentbegeleider / examinator
+  Clustercoordinator->>CRM: Koppel student aan docentbegeleider / examinator
   Clustercoordinator->>Praktijkbureau: Koppeling voltooid
   Praktijkbureau->>Organisatie: Bevestigingsmail
   Praktijkbureau->>Student: Bevestigingsmail
@@ -174,64 +163,53 @@ display(HTML(html_summary))
 sequenceDiagram
   actor Organisatie
   actor Praktijkbureau
-  actor Servicedesk
   actor Clustercoordinator
   actor Student
   actor Talentregie
   actor Docentbegeleider/examinator
-  participant Bedrijvenportaal
-  participant Stageportaal
-  participant CRM
-  participant OSIRIS
-  participant Teams
-  
 
   %% Fase 1: Toegang & Indienen
   rect rgb(137, 207, 240, 0.3)
-  Organisatie->>Servicedesk: Aanvraag toegang
-  Servicedesk->>Organisatie: Wachtwoord per e-mail na verificatie
+  Organisatie->>Praktijkbureau: Aanvraag toegang
+  Praktijkbureau->>Organisatie: Wachtwoord per e-mail
   Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
+  Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
   end
   
   %% Fase 2: Beoordelen & Verwerken
   rect rgb(240, 128, 128, 0.1)
-  CRM->>Clustercoordinator: Nieuwe praktijkplaats details
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
   alt Goedgekeurd
-    Clustercoordinator->>CRM: GESCHIKT VOOR STAGE/AOD
+    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
-    Clustercoordinator->>CRM: Aanvraag geannuleerd (via 3 puntjes in werkbalk)
+    Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
     Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
-  end
-  opt Geschikt voor ander opleiding
-    Praktijkbureau ->> CRM: Opleiding aangepast in veld Opleiding vanuit bedrijvenportaal
   end
   Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
   end
 
   %% Fase 3: Inschrijvingen & Goedkeuring
   rect rgb(152, 251, 152, 0.3)
-  Praktijkbureau->>Teams: Plaatst Excel-bestanden (BK STAGE en BK AOD basisbestanden)
-  Praktijkbureau->>OSIRIS: Koppelt student aan groep (ST-BK-STAGE of ST-BK-AOD)
   Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
   Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
   Student->>Organisatie: Contact opnemen voor stage
   Organisatie->>Student: Overeenkomst
   Student->>Stageportaal: Praktijkplaats indienen
-  CRM->>Clustercoordinator: Nieuwe inschrijving details
+  Stageportaal->>Praktijkbureau: Nieuwe inschrijving
+  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel nieuwe inschrijving
   alt Goedgekeurd
-    Clustercoordinator->>CRM: GOEDGEKEURD
+    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
   else Afgekeurd
-    Clustercoordinator->>CRM: AFGEKEURD
+    Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
     Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
   end
-  Praktijkbureau->>Teams: Conversie en verplaatsing naar ‘BK 24/25 STAGE S1 OU student informeel geplaatst’ of ‘BK 24/25 AOD S1 OU student informeel geplaatst’
   end
 
   %% Fase 4: Inzet begeleiding
   rect rgb(230, 230, 250, 0.3)
   Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
   Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
-  Clustercoordinator->>CRM: Koppeling student aan docentbegeleider / examinator
+  Clustercoordinator->>CRM: Koppel student aan docentbegeleider / examinator
   Clustercoordinator->>Praktijkbureau: Koppeling voltooid
   Praktijkbureau->>Organisatie: Bevestigingsmail
   Praktijkbureau->>Student: Bevestigingsmail
@@ -246,106 +224,67 @@ sequenceDiagram
   end
   end
 
-
 ```
 :::
 
 ### Processtappen
 
-#### 
+#### Fase 1: Toegang & Indienen
 
-Hier is de verbeterde en genummerde structuur van de processtappen:
+1.  **Aanvraag toegang tot bedrijvenportaal**:
+    -   **Stap 1.1**: Organisatie dient een aanvraag in bij het Praktijkbureau voor toegang tot het bedrijvenportaal.
+    -   **Stap 1.2**: Praktijkbureau verifieert de aanvraag en stuurt het wachtwoord per e-mail naar de organisatie.
+2.  **Indienen van praktijkplaatsen**:
+    -   **Stap 1.3**: Organisatie logt in op het bedrijvenportaal met het ontvangen wachtwoord.
+    -   **Stap 1.4**: Organisatie dient een nieuwe praktijkplaats in via het bedrijvenportaal, inclusief alle vereiste details.
 
-### Processtappen
+#### Fase 2: Beoordelen & Verwerken
 
-#### ORGANISATIE
+3.  **Beoordeling door clustercoördinator**:
+    -   **Stap 2.1**: Praktijkbureau ontvangt de details van de nieuwe praktijkplaats en stuurt deze door naar de clustercoördinator.
+    -   **Stap 2.2**: Clustercoördinator beoordeelt de ingediende praktijkplaats.
+        -   **Goedgekeurd**: Status wordt bijgewerkt naar "PB BK: goedgekeurd STAGE/AOD".
+        -   **Afgekeurd**: Status wordt bijgewerkt naar "PB BK: afgekeurd STAGE/AOD" en de organisatie ontvangt informatie over waarom de praktijkplaats niet voldoet en eventuele aanpassingen die nodig zijn.
+4.  **Converteren van goedgekeurde praktijkplaatsen**:
+    -   **Stap 2.3**: Praktijkbureau maakt de goedgekeurde praktijkplaats zichtbaar voor studenten op het stageportaal.
 
-**Fase 1: Toegang & Indienen**
+#### Fase 3: Inschrijvingen & Goedkeuring
 
-**Aanvraag toegang tot bedrijvenportaal:**
+5.  **Studenten toegang verlenen tot stageportaal**:
+    -   **Stap 3.1**: Praktijkbureau stuurt een uitnodigingscode voor het stageportaal naar studenten.
+    -   **Stap 3.2**: Studenten loggen in op het stageportaal en bekijken de beschikbare praktijkplaatsen.
+6.  **Inschrijvingen door studenten**:
+    -   **Stap 3.3**: Studenten nemen contact op met de organisatie die de stage aanbiedt en sluiten een overeenkomst.
+    -   **Stap 3.4**: Studenten dienen de praktijkplaats in via het stageportaal.
+7.  **Beoordeling van nieuwe inschrijving**:
+    -   **Stap 3.5**: Stageportaal stuurt de nieuwe inschrijving door naar het Praktijkbureau.
+    -   **Stap 3.6**: Praktijkbureau stuurt de nieuwe inschrijving door naar de clustercoördinator.
+    -   **Stap 3.7**: Clustercoördinator beoordeelt de nieuwe inschrijving.
+        -   **Goedgekeurd**: Status wordt bijgewerkt naar "PB BK: goedgekeurd STAGE/AOD".
+        -   **Afgekeurd**: Status wordt bijgewerkt naar "PB BK: afgekeurd STAGE/AOD" en de student ontvangt informatie over waarom de inschrijving niet voldoet en eventuele aanpassingen die nodig zijn.
 
-1.1: Organisatie dient een aanvraag voor toegang tot het bedrijvenportaal in via [Praktijkopdrachten](https://praktijkopdrachten.han.nl/).
+#### Fase 4: Inzet begeleiders / examinatoren
 
-1.2: Servicedesk verifieert de aanvraag en stuurt het wachtwoord per e-mail naar de organisatie.
+8.  **Inzet van begeleiders / examinatoren**:
+    -   **Stap 4.1**: Clustercoördinator stuurt verzoek om overzicht van beschikbare docentbegeleiders / examinatoren naar talentregissie.\<\<\< IN WELKE VORM??
+    -   **Stap 4.1**: Talentregissie stuurt overzicht van beschikbare docentbegeleiders / examinatoren naar clustercoördinator.\<\<\< IN WELKE VORM??
+    -   **Stap 4.2**: Clustercoördinator koppelt de student aan een docentbegeleider / examinator.\<\<\< HOE IS DE ACTUELE CAPACITEIT ZICHTBAAR??
+9.  **Verzending van bevestigingsmails**:
+    -   **Stap 4.3**: Clustercoordinator bevestigt koppeling student met docentbegeleider / examinator aan Praktijkbureau.
+    -   **Stap 4.4**: Praktijkbureau stuurt bevestigingsmails naar de organisatie, student, en docentbegeleiders.
 
-**Indienen van praktijkplaatsen:**
+#### Fase 5: Overzicht en Onderhoud
 
-1.3: Organisatie logt in op het bedrijvenportaal met het ontvangen wachtwoord.
+10. **Monitoring en updates**:
+    -   **Stap 5.1**: Bijhouden gegevens docentbegeleiders / examinatoren \<\<\< OP BASIS VAN INFORMATIE TALENTREGIE??
+    -   **Stap 5.2**: Bijhouden van basisbestanden en de status van praktijkplaatsen.\<\<\< OP BASIS VAN WELKE INFORMATIEBRONNEN??
 
-1.4: Organisatie dient een nieuwe praktijkplaats in via het bedrijvenportaal, inclusief alle vereiste details.
+#### Openstaande zaken
 
-**Fase 2: Beoordelen & Verwerken**
+-   **Vraag 1**: Hoe wordt de capaciteit van docentbegeleiders / examinatoren bepaald en gecommuniceerd?
 
-**Beoordeling door clustercoördinator:**
+-   **Vraag 2**: Hoe wordt de beschikbaarheid van docentbegeleiders / examinatoren gecommuniceerd en bijgehouden?
 
-2.1: Clustercoördinator beoordeelt in CRM-weergave ‘Aanvragen BK bedrijf open’ de ingediende praktijkplaats.
+-   **Vraag 3**: Hoe wordt de actuele status van praktijkplaatsen gecommuniceerd en bijgehouden?
 
--   **Goedgekeurd**: Status wordt in ‘Naam praktijkplaats’ bijgewerkt naar “GESCHIKT VOOR STAGE en/of AOD”.
--   **Afgekeurd**: De organisatie ontvangt informatie over waarom de praktijkplaats niet voldoet en eventuele aanpassingen die nodig zijn. Als de praktijkplaats niet geschikt is voor BK, maar wel geschikt zou kunnen zijn voor een andere opleiding, wordt bij de aanvraag de opleiding aangepast in veld ‘Opleiding vanuit bedrijvenportaal’. Als de praktijkplaats niet geschikt is voor BK of een andere opleiding wordt de aanvraag geannuleerd (via 3 puntjes in werkbalk).
-
-**Converteren van goedgekeurde praktijkplaatsen:**
-
-2.2: Praktijkbureau maakt de goedgekeurde praktijkplaats zichtbaar voor studenten op het stageportaal.
-
-#### STUDENT
-
-**Fase 3: Inschrijvingen & Goedkeuring**
-
-**Studenten toegang verlenen tot stageportaal:**
-
-3.1: Praktijkbureau plaatst in Teams Excel-bestanden ‘BK STAGE 2024-2025 sem. 1│basisbestand’ en ‘BK AOD 2024-2025 sem. 1│basisbestand’ (SSLB laat weten wie de potentiële stagiairs en AOD-ers zijn).
-
-3.2: Praktijkbureau koppelt student in OSIRIS aan groep ST-BK-STAGE of ST-BK-AOD.
-
-3.3: Praktijkbureau stuurt een uitnodigingscode voor het stageportaal naar de student.
-
-3.4: Student logt in op het stageportaal en bekijkt de beschikbare praktijkplaatsen.
-
-**Inschrijvingen door studenten:**
-
-3.5: Studenten zoeken zelf een stageplaats of nemen contact op met een organisatie die een stage aanbiedt via het stageportaal en maken afspraken onder voorbehoud van het behalen van de stagedrempel en sluiten een overeenkomst.
-
-3.6: Student dient de praktijkplaats in via het stageportaal.
-
-**Beoordeling van nieuwe inschrijving:**
-
-3.7: Praktijkopdrachten die door studenten zijn ingediend staan in CRM-weergave ‘Aanvragen BK student open’.
-
-3.8: Clustercoördinator beoordeelt in CRM-weergave ‘Aanvragen BK student open’ de ingediende praktijkopdracht.
-
--   **Goedgekeurd**: Status wordt in ‘Onderwerp’ (vóór ‘Nieuw portaalaanvraag van student’) bijgewerkt naar “BK: GOEDGEKEURD”.
--   **Afgekeurd**: Status wordt in ‘Onderwerp’ bijgewerkt naar “BK: AFGEKEURD” en de student ontvangt informatie over waarom de praktijkplaats niet voldoet en eventuele aanpassingen die nodig zijn.
-
-**Converteren van goedgekeurde praktijkplaats:**
-
-3.9: Praktijkbureau converteert de aanvraag en verhuist deze naar ‘BK 24/25 STAGE S1 OU student informeel geplaatst’ of ‘BK 24/25 AOD S1 OU student informeel geplaatst’.
-
-#### KOPPELEN
-
-**Fase 4: Inzet begeleiders / examinatoren**
-
-4.1: Clustercoördinator stuurt verzoek om overzicht van beschikbare docentbegeleiders / examinatoren naar talentregie.
-
-4.2: Talentregie stuurt overzicht van beschikbare docentbegeleiders / examinatoren naar clustercoördinator.
-
-4.3: Clustercoördinator koppelt de student aan een docentbegeleider / examinator.
-
-4.4: Clustercoördinator bevestigt koppeling student met docentbegeleider / examinator aan Praktijkbureau.
-
-4.5: Praktijkbureau stuurt bevestigingsmails naar de organisatie, student, en docentbegeleiders.
-
-#### MONITOREN en ACTUALISEREN
-
-**Fase 5: Overzicht en Onderhoud**
-
-5.1: Bijhouden gegevens docentbegeleiders / examinatoren.
-
-5.2: Bijhouden van basisbestanden en de status van praktijkplaatsen.
-
-### Openstaande zaken
-
-1.  Hoe wordt de capaciteit van docentbegeleiders / examinatoren bepaald en gecommuniceerd?
-2.  Hoe wordt de beschikbaarheid van docentbegeleiders / examinatoren gecommuniceerd en bijgehouden?
-3.  Hoe wordt de actuele status van praktijkplaatsen gecommuniceerd en bijgehouden?
-4.  Hoe wordt de stagedrempel van studenten gecontroleerd? Overleg Lies, Yvonne en Debbie 16-05-2024. Wat wordt gecommuniceerd over (moment van indienen van) stageovereenkomst?
-5.  Hoe worden partijen (bedrijfscoach, student, docentbegeleider en examinator) geïnformeerd over koppeling?
+-   **Vraag 4**: Hoe wordt de stagedrempel van studenten gecontroleerd?
