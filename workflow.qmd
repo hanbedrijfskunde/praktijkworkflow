@@ -13,159 +13,6 @@ lang: nl
 
 Het proces begint met het aanvragen van toegang door de organisatie, gevolgd door het indienen van praktijkplaatsen. Deze worden beoordeeld door de clustercoördinator en, indien goedgekeurd, zichtbaar gemaakt voor studenten. Studenten krijgen toegang tot het stageportaal, nemen contact op met organisaties en dienen hun inschrijvingen in. Deze inschrijvingen worden opnieuw beoordeeld en bij goedkeuring worden studenten gekoppeld aan begeleiders. Gedurende het hele proces worden regelmatig updates uitgevoerd en gegevens bijgehouden.
 
-### Actoren en systemen
-
-Hieronder volgt een overzicht van alle actoren en systemen die bij de processen zijn betrokken, alsmede per procesfase de acties die ze initieren of waarvan ze de uitkomst ontvangen.
-
-```{python}
-#| echo: false
-
-import re
-from collections import defaultdict
-from IPython.display import display, HTML
-
-def summarize_mermaid_diagram_to_html(diagram_code):
-    actions = defaultdict(lambda: {'perform': [], 'receive': []})
-    actors = set()
-    current_phase = None
-
-    for line in diagram_code.strip().split('\n'):
-        line = line.strip()
-
-        if line.startswith("%%"):
-            current_phase = line.split("%%")[1].strip()
-            continue
-
-        if line.startswith("actor"):
-            actor = line.split()[1]
-            actors.add(actor)
-            continue
-
-        match = re.match(r'([\w/]+)->>([\w/]+): (.+)', line)
-        if match:
-            actor, target, action = match.groups()
-            actions[actor]['perform'].append(f"<li><strong>{current_phase}</strong>: {action}</li>")
-            actions[target]['receive'].append(f"<li><strong>{current_phase}</strong>: {action} van {actor}</li>")
-
-    # Generate HTML
-    html_output = ["<html><body>"]
-
-    # Describe actors first
-    html_output.append("<h4>Actoren</h4><ul>")
-    for actor in sorted(actors):
-        html_output.append(f"<li><strong>{actor}:</strong><ul>")
-        if actions[actor]['perform']:
-            html_output.append("<li><strong>Acties uitvoering:</strong><ul>")
-            html_output.extend(actions[actor]['perform'])
-            html_output.append("</ul></li>")
-        if actions[actor]['receive']:
-            html_output.append("<li><strong>Acties ontvangst:</strong><ul>")
-            html_output.extend(actions[actor]['receive'])
-            html_output.append("</ul></li>")
-        html_output.append("</ul></li>")
-    html_output.append("</ul>")
-
-    # Describe non-actors next
-    html_output.append("<h4>Systemen</h4><ul>")
-    for participant, activity in sorted(actions.items()):
-        if participant not in actors:
-            html_output.append(f"<li><strong>{participant}:</strong><ul>")
-            if activity['perform']:
-                html_output.append("<li><strong>Acties uitvoering:</strong><ul>")
-                html_output.extend(activity['perform'])
-                html_output.append("</ul></li>")
-            if activity['receive']:
-                html_output.append("<li><strong>Acties ontvangst:</strong><ul>")
-                html_output.extend(activity['receive'])
-                html_output.append("</ul></li>")
-            html_output.append("</ul></li>")
-    html_output.append("</ul></body></html>")
-
-    return "\n".join(html_output)
-
-# Example usage:
-diagram_code = """
-sequenceDiagram
-  actor Organisatie
-  actor Praktijkbureau
-  actor Servicedesk
-  actor Clustercoordinator
-  actor Student
-  actor Talentregie
-  actor Docentbegeleider/examinator
-  participant Bedrijvenportaal
-  participant Stageportaal
-  participant CRM
-  participant OSIRIS
-  participant Teams
-  
-
-  %% Fase 1: Toegang & Indienen
-  rect rgb(137, 207, 240, 0.3)
-  Organisatie->>Servicedesk: Aanvraag toegang
-  Servicedesk->>Organisatie: Wachtwoord per e-mail na verificatie
-  Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
-  end
-  
-  %% Fase 2: Beoordelen & Verwerken
-  rect rgb(240, 128, 128, 0.1)
-  CRM->>Clustercoordinator: Nieuwe praktijkplaats details
-  alt Goedgekeurd
-    Clustercoordinator->>CRM: GESCHIKT VOOR STAGE/AOD
-  else Afgekeurd
-    Clustercoordinator->>CRM: Aanvraag geannuleerd (via 3 puntjes in werkbalk)
-    Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
-  end
-  opt Geschikt voor ander opleiding
-    Praktijkbureau ->> CRM: Opleiding aangepast in veld Opleiding vanuit bedrijvenportaal
-  end
-  Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
-  end
-
-  %% Fase 3: Inschrijvingen & Goedkeuring
-  rect rgb(152, 251, 152, 0.3)
-  Praktijkbureau->>Teams: Plaatst Excel-bestanden (BK STAGE en BK AOD basisbestanden)
-  Praktijkbureau->>OSIRIS: Koppelt student aan groep (ST-BK-STAGE of ST-BK-AOD)
-  Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
-  Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
-  Student->>Organisatie: Contact opnemen voor stage
-  Organisatie->>Student: Overeenkomst
-  Student->>Stageportaal: Praktijkplaats indienen
-  CRM->>Clustercoordinator: Nieuwe inschrijving details
-  alt Goedgekeurd
-    Clustercoordinator->>CRM: GOEDGEKEURD
-  else Afgekeurd
-    Clustercoordinator->>CRM: AFGEKEURD
-    Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
-  end
-  Praktijkbureau->>Teams: Conversie en verplaatsing naar ‘BK 24/25 STAGE S1 OU student informeel geplaatst’ of ‘BK 24/25 AOD S1 OU student informeel geplaatst’
-  end
-
-  %% Fase 4: Inzet begeleiding
-  rect rgb(230, 230, 250, 0.3)
-  Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
-  Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
-  Clustercoordinator->>CRM: Koppeling student aan docentbegeleider / examinator
-  Clustercoordinator->>Praktijkbureau: Koppeling voltooid
-  Praktijkbureau->>Organisatie: Bevestigingsmail
-  Praktijkbureau->>Student: Bevestigingsmail
-  Praktijkbureau->>Docentbegeleider/examinator: Bevestigingsmail
-  end
-
-  %% Fase 5: Overzicht en Onderhoud
-  rect rgb(255, 250, 205, 0.3)
-  loop Regelmatige updates
-    Praktijkbureau->>CRM: Bijhouden gegevens docentbegeleiders / examinatoren
-    Praktijkbureau->>CRM: Bijhouden van basisbestanden en status van praktijkplaatsen
-  end
-  end
-"""
-
-html_summary = summarize_mermaid_diagram_to_html(diagram_code)
-display(HTML(html_summary))
-
-```
-
 ### Processchema
 
 ::: column-screen
@@ -179,8 +26,6 @@ sequenceDiagram
   actor Student
   actor Talentregie
   actor Docentbegeleider/examinator
-  participant Bedrijvenportaal
-  participant Stageportaal
   participant CRM
   participant OSIRIS
   participant Teams
@@ -190,7 +35,7 @@ sequenceDiagram
   rect rgb(137, 207, 240, 0.3)
   Organisatie->>Servicedesk: Aanvraag toegang
   Servicedesk->>Organisatie: Wachtwoord per e-mail na verificatie
-  Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
+  Organisatie->>CRM: Logt in op bedrijvenportaal en dient praktijkplaats in
   end
   
   %% Fase 2: Beoordelen & Verwerken
@@ -205,7 +50,7 @@ sequenceDiagram
   opt Geschikt voor ander opleiding
     Praktijkbureau ->> CRM: Opleiding aangepast in veld Opleiding vanuit bedrijvenportaal
   end
-  Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
+  Praktijkbureau->>CRM: Praktijkplaats zichtbaar maken voor studenten
   end
 
   %% Fase 3: Inschrijvingen & Goedkeuring
@@ -213,10 +58,10 @@ sequenceDiagram
   Praktijkbureau->>Teams: Plaatst Excel-bestanden (BK STAGE en BK AOD basisbestanden)
   Praktijkbureau->>OSIRIS: Koppelt student aan groep (ST-BK-STAGE of ST-BK-AOD)
   Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
-  Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
+  Student->>CRM: Logt in op stageportaal en bekijkt praktijkplaatsen
   Student->>Organisatie: Contact opnemen voor stage
   Organisatie->>Student: Overeenkomst
-  Student->>Stageportaal: Praktijkplaats indienen
+  Student->>CRM: Praktijkplaats indienen op stageportaal
   CRM->>Clustercoordinator: Nieuwe inschrijving details
   alt Goedgekeurd
     Clustercoordinator->>CRM: GOEDGEKEURD
@@ -329,6 +174,157 @@ sequenceDiagram
 5.1: Bijhouden gegevens docentbegeleiders / examinatoren.
 
 5.2: Bijhouden van basisbestanden en de status van praktijkplaatsen.
+
+### Actoren en systemen
+
+Hieronder volgt een overzicht van alle actoren en systemen die bij de processen zijn betrokken, alsmede per procesfase de acties die ze initieren of waarvan ze de uitkomst ontvangen.
+
+```{python}
+#| echo: false
+
+import re
+from collections import defaultdict
+from IPython.display import display, HTML
+
+def summarize_mermaid_diagram_to_html(diagram_code):
+    actions = defaultdict(lambda: {'perform': [], 'receive': []})
+    actors = set()
+    current_phase = None
+
+    for line in diagram_code.strip().split('\n'):
+        line = line.strip()
+
+        if line.startswith("%%"):
+            current_phase = line.split("%%")[1].strip()
+            continue
+
+        if line.startswith("actor"):
+            actor = line.split()[1]
+            actors.add(actor)
+            continue
+
+        match = re.match(r'([\w/]+)->>([\w/]+): (.+)', line)
+        if match:
+            actor, target, action = match.groups()
+            actions[actor]['perform'].append(f"<li><strong>{current_phase}</strong>: {action}</li>")
+            actions[target]['receive'].append(f"<li><strong>{current_phase}</strong>: {action} van {actor}</li>")
+
+    # Generate HTML
+    html_output = ["<html><body>"]
+
+    # Describe actors first
+    html_output.append("<h4>Actoren</h4><ul>")
+    for actor in sorted(actors):
+        html_output.append(f"<li><strong>{actor}:</strong><ul>")
+        if actions[actor]['perform']:
+            html_output.append("<li><strong>Acties uitvoering:</strong><ul>")
+            html_output.extend(actions[actor]['perform'])
+            html_output.append("</ul></li>")
+        if actions[actor]['receive']:
+            html_output.append("<li><strong>Acties ontvangst:</strong><ul>")
+            html_output.extend(actions[actor]['receive'])
+            html_output.append("</ul></li>")
+        html_output.append("</ul></li>")
+    html_output.append("</ul>")
+
+    # Describe non-actors next
+    html_output.append("<h4>Systemen</h4><ul>")
+    for participant, activity in sorted(actions.items()):
+        if participant not in actors:
+            html_output.append(f"<li><strong>{participant}:</strong><ul>")
+            if activity['perform']:
+                html_output.append("<li><strong>Acties uitvoering:</strong><ul>")
+                html_output.extend(activity['perform'])
+                html_output.append("</ul></li>")
+            if activity['receive']:
+                html_output.append("<li><strong>Acties ontvangst:</strong><ul>")
+                html_output.extend(activity['receive'])
+                html_output.append("</ul></li>")
+            html_output.append("</ul></li>")
+    html_output.append("</ul></body></html>")
+
+    return "\n".join(html_output)
+
+# Example usage:
+diagram_code = """
+sequenceDiagram
+  actor Organisatie
+  actor Praktijkbureau
+  actor Servicedesk
+  actor Clustercoordinator
+  actor Student
+  actor Talentregie
+  actor Docentbegeleider/examinator
+  participant CRM
+  participant OSIRIS
+  participant Teams
+  
+
+  %% Fase 1: Toegang & Indienen
+  rect rgb(137, 207, 240, 0.3)
+  Organisatie->>Servicedesk: Aanvraag toegang
+  Servicedesk->>Organisatie: Wachtwoord per e-mail na verificatie
+  Organisatie->>CRM: Logt in op bedrijvenportaal en dient praktijkplaats in
+  end
+  
+  %% Fase 2: Beoordelen & Verwerken
+  rect rgb(240, 128, 128, 0.1)
+  CRM->>Clustercoordinator: Nieuwe praktijkplaats details
+  alt Goedgekeurd
+    Clustercoordinator->>CRM: GESCHIKT VOOR STAGE/AOD
+  else Afgekeurd
+    Clustercoordinator->>CRM: Aanvraag geannuleerd (via 3 puntjes in werkbalk)
+    Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
+  end
+  opt Geschikt voor ander opleiding
+    Praktijkbureau ->> CRM: Opleiding aangepast in veld Opleiding vanuit bedrijvenportaal
+  end
+  Praktijkbureau->>CRM: Praktijkplaats zichtbaar maken voor studenten
+  end
+
+  %% Fase 3: Inschrijvingen & Goedkeuring
+  rect rgb(152, 251, 152, 0.3)
+  Praktijkbureau->>Teams: Plaatst Excel-bestanden (BK STAGE en BK AOD basisbestanden)
+  Praktijkbureau->>OSIRIS: Koppelt student aan groep (ST-BK-STAGE of ST-BK-AOD)
+  Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
+  Student->>CRM: Logt in op stageportaal en bekijkt praktijkplaatsen
+  Student->>Organisatie: Contact opnemen voor stage
+  Organisatie->>Student: Overeenkomst
+  Student->>CRM: Praktijkplaats indienen op stageportaal
+  CRM->>Clustercoordinator: Nieuwe inschrijving details
+  alt Goedgekeurd
+    Clustercoordinator->>CRM: GOEDGEKEURD
+  else Afgekeurd
+    Clustercoordinator->>CRM: AFGEKEURD
+    Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
+  end
+  Praktijkbureau->>Teams: Conversie en verplaatsing naar ‘BK 24/25 STAGE S1 OU student informeel geplaatst’ of ‘BK 24/25 AOD S1 OU student informeel geplaatst’
+  end
+
+  %% Fase 4: Inzet begeleiding
+  rect rgb(230, 230, 250, 0.3)
+  Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
+  Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
+  Clustercoordinator->>CRM: Koppeling student aan docentbegeleider / examinator
+  Clustercoordinator->>Praktijkbureau: Koppeling voltooid
+  Praktijkbureau->>Organisatie: Bevestigingsmail
+  Praktijkbureau->>Student: Bevestigingsmail
+  Praktijkbureau->>Docentbegeleider/examinator: Bevestigingsmail
+  end
+
+  %% Fase 5: Overzicht en Onderhoud
+  rect rgb(255, 250, 205, 0.3)
+  loop Regelmatige updates
+    Praktijkbureau->>CRM: Bijhouden gegevens docentbegeleiders / examinatoren
+    Praktijkbureau->>CRM: Bijhouden van basisbestanden en status van praktijkplaatsen
+  end
+  end
+"""
+
+html_summary = summarize_mermaid_diagram_to_html(diagram_code)
+display(HTML(html_summary))
+
+```
 
 ### Openstaande zaken
 

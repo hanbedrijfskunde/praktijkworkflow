@@ -13,53 +13,62 @@ editor: visual
 sequenceDiagram
   actor Organisatie
   actor Praktijkbureau
+  actor Servicedesk
   actor Clustercoordinator
   actor Student
   actor Talentregie
   actor Docentbegeleider/examinator
+  participant CRM
+  participant OSIRIS
+  participant Teams
+  
 
   %% Fase 1: Toegang & Indienen
   rect rgb(137, 207, 240, 0.3)
-  Organisatie->>Praktijkbureau: Aanvraag toegang
-  Praktijkbureau->>Organisatie: Wachtwoord per e-mail
-  Organisatie->>Bedrijvenportaal: Logt in en dient praktijkplaats in
-  Bedrijvenportaal->>Praktijkbureau: Nieuwe praktijkplaats details
+  Organisatie->>Servicedesk: Aanvraag toegang
+  Servicedesk->>Organisatie: Wachtwoord per e-mail na verificatie
+  Organisatie->>CRM: Logt in op bedrijvenportaal en dient praktijkplaats in
   end
   
   %% Fase 2: Beoordelen & Verwerken
   rect rgb(240, 128, 128, 0.1)
-  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel praktijkplaats
+  CRM->>Clustercoordinator: Nieuwe praktijkplaats details
   alt Goedgekeurd
-    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
+    Clustercoordinator->>CRM: GESCHIKT VOOR STAGE/AOD
   else Afgekeurd
-    Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
+    Clustercoordinator->>CRM: Aanvraag geannuleerd (via 3 puntjes in werkbalk)
     Praktijkbureau->>Organisatie: Informatie over afkeuring en aanpassingen
   end
-  Praktijkbureau->>Bedrijvenportaal: Praktijkplaats zichtbaar maken voor studenten
+  opt Geschikt voor ander opleiding
+    Praktijkbureau ->> CRM: Opleiding aangepast in veld Opleiding vanuit bedrijvenportaal
+  end
+  Praktijkbureau->>CRM: Praktijkplaats zichtbaar maken voor studenten
   end
 
   %% Fase 3: Inschrijvingen & Goedkeuring
   rect rgb(152, 251, 152, 0.3)
+  Praktijkbureau->>Teams: Plaatst Excel-bestanden (BK STAGE en BK AOD basisbestanden)
+  Praktijkbureau->>OSIRIS: Koppelt student aan groep (ST-BK-STAGE of ST-BK-AOD)
   Praktijkbureau->>Student: Uitnodigingscode voor stageportaal
-  Student->>Stageportaal: Logt in en bekijkt praktijkplaatsen
+  Student->>CRM: Logt in op stageportaal en bekijkt praktijkplaatsen
   Student->>Organisatie: Contact opnemen voor stage
   Organisatie->>Student: Overeenkomst
-  Student->>Stageportaal: Praktijkplaats indienen
-  Stageportaal->>Praktijkbureau: Nieuwe inschrijving
-  Praktijkbureau->>Clustercoordinator: Opdracht beoordeel nieuwe inschrijving
+  Student->>CRM: Praktijkplaats indienen op stageportaal
+  CRM->>Clustercoordinator: Nieuwe inschrijving details
   alt Goedgekeurd
-    Clustercoordinator->>Praktijkbureau: PB BK: goedgekeurd STAGE/AOD
+    Clustercoordinator->>CRM: GOEDGEKEURD
   else Afgekeurd
-    Clustercoordinator->>Praktijkbureau: PB BK: afgekeurd STAGE/AOD
+    Clustercoordinator->>CRM: AFGEKEURD
     Praktijkbureau->>Student: Informatie over afkeuring en aanpassingen
   end
+  Praktijkbureau->>Teams: Conversie en verplaatsing naar ‘BK 24/25 STAGE S1 OU student informeel geplaatst’ of ‘BK 24/25 AOD S1 OU student informeel geplaatst’
   end
 
   %% Fase 4: Inzet begeleiding
   rect rgb(230, 230, 250, 0.3)
   Clustercoordinator->>Talentregie: Verzoek om overzicht beschikbare docentbegeleiders / examinatoren
   Talentregie->>Clustercoordinator: Beschikbare docentbegeleiders / examinatoren
-  Clustercoordinator->>CRM: Koppel student aan docentbegeleider / examinator
+  Clustercoordinator->>CRM: Koppeling student aan docentbegeleider / examinator
   Clustercoordinator->>Praktijkbureau: Koppeling voltooid
   Praktijkbureau->>Organisatie: Bevestigingsmail
   Praktijkbureau->>Student: Bevestigingsmail
@@ -73,6 +82,5 @@ sequenceDiagram
     Praktijkbureau->>CRM: Bijhouden van basisbestanden en status van praktijkplaatsen
   end
   end
-
 ```
 
