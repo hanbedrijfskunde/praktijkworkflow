@@ -331,5 +331,6 @@ display(HTML(html_summary))
 1.  Hoe wordt de capaciteit van docentbegeleiders / examinatoren bepaald en gecommuniceerd?
 2.  Hoe wordt de beschikbaarheid van docentbegeleiders / examinatoren gecommuniceerd en bijgehouden?
 3.  Hoe wordt de actuele status van praktijkplaatsen gecommuniceerd en bijgehouden?
-4.  Hoe wordt de stagedrempel van studenten gecontroleerd? Overleg Lies, Yvonne en Debbie 16-05-2024. Wat wordt gecommuniceerd over (moment van indienen van) stageovereenkomst?
-5.  Hoe worden partijen (bedrijfscoach, student, docentbegeleider en examinator) geïnformeerd over koppeling?
+4.  Hoe wordt de stagedrempel van studenten gecontroleerd? Overleg Lies, Yvonne en Debbie 16-05-2024.
+5.  Wat wordt gecommuniceerd over (moment van indienen van) stageovereenkomst?
+6.  Hoe worden partijen (bedrijfscoach, student, docentbegeleider en examinator) geïnformeerd over koppeling?
